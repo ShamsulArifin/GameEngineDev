@@ -52,8 +52,7 @@ The repository currently contains the following directory:
 
 ## About the Author
 
-This project is maintained by [shamsularifin.pro](https://portfolio-eta-seven-57.vercel.app/)  
-Shamsul has trained over 5,000 students in industry-standard tools such as Autodesk Maya, Unreal Engine, and Blender.  
+This project is maintained by [Shamsul Arifin](https://portfolio-eta-seven-57.vercel.app/)  
 Website: [shamsularifin.pro](https://portfolio-eta-seven-57.vercel.app/)
 
 ## Contributing
