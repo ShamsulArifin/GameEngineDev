@@ -22,7 +22,7 @@ git clone https://github.com/ShamsulArifin/GameEngineDev.git
 ### 2. Install Dependencies
 
 - **SDL Library**:  
-  Make sure SDL2 is installed on your system. You can download it from the [official SDL website](https://www.libsdl.org/download-2.0.php).
+  Make sure SDL3 is installed on your system. You can download it from this [link](https://github.com/libsdl-org/SDL/releases).
 
 ### 3. Build the Project
 
