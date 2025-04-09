@@ -32,16 +32,16 @@ Navigate to the project directory:
 cd GameEngineDev
 ```
 
-Compile the source code using your preferred build system or compiler. For example, with `gcc`:
+Compile the source code using your preferred build system or compiler. For example, with `g++`:
 
 ```bash
-gcc -o game_engine main.c -lSDL2
+g++ main.cpp -I src/include -L src/lib -lSDL3 -o main.exe
 ```
 
 ### 4. Run the Application
 
 ```bash
-./game_engine
+./main
 ```
 
 ## Project Structure
