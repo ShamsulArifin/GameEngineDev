@@ -1,6 +1,7 @@
 #include <SDL3/SDL.h>
 #include <SDL3_ttf/SDL_ttf.h>
 #include <iostream>
+#include <string>
 
 int main(int argc, char *argv[])
 {
@@ -9,6 +10,12 @@ int main(int argc, char *argv[])
 	{
 		std::cerr << "SDL couldn't initialize! SDL_Error: " << SDL_GetError() << "\n";
 		return -1;
+	}
+
+	// Initialize SDL3_ttf
+	if (TTF_Init() != 0)
+	{
+		std::cerr << "TTF_Init failed: " << SDL_GetError() << std::endl;
 	}
 
 	// Create window
@@ -37,6 +44,13 @@ int main(int argc, char *argv[])
 		return -1;
 	}
 
+	// load font
+	TTF_Font *font = TTF_OpenFont("lucon.ttf", 24);
+	if (!font)
+	{
+		std::cerr << "Failed to load font" << SDL_GetError() << std::endl;
+	}
+
 	// Main game loop
 	bool isRunning = true;
 	SDL_Event event;
@@ -54,6 +68,8 @@ int main(int argc, char *argv[])
 		Uint32 currentTime = SDL_GetTicks();
 		float deltaTime = (currentTime - lastTime) / 1000.0f;  // converts ms to s
 		lastTime = currentTime;
+
+		float fps = 1.0f / deltaTime;
 
 		std::cout << "deltaTime: " << deltaTime << " sec\n";
 
@@ -76,6 +92,15 @@ int main(int argc, char *argv[])
 		// Render
 		SDL_SetRenderDrawColor(renderer, 30, 30, 30, 255);
 		SDL_RenderClear(renderer);
+
+		// FPS text
+		std::string fpsText = "FPS: " + std::to_string((int)fps);
+		SDL_Color white =  {255, 255, 255, 255};
+
+		SDL_Surface *surface = TTF_RenderText_Solid(font, fpsText.c_str(), fpsText.length(), white);
+		SDL_Texture *texture = SDL_CreateTextureFromSurface(renderer, surface);
+		SDL_FRect dstRect = {10.0f, 10.0f, static_cast<float>(surface->w), static_cast<float>(surface->h)};
+		SDL_RenderTexture(renderer, texture, nullptr, &dstRect);
 
 		SDL_FRect rect = {static_cast<float>(rectX), 250, 100, 100};
 		SDL_SetRenderDrawColor(renderer, 255, 100, 100, 255);
