@@ -40,8 +40,22 @@ int main(int argc, char *argv[])
 	bool isRunning = true;
 	SDL_Event event;
 
+	// deltaTime
+	Uint32 lastTime = SDL_GetTicks();  // milisecond
+
+	// demo object
+	float rectX = 0.0f, speed = 300.0f;  // pixels per second
+
+
 	while (isRunning)
 	{
+		// deltaTime calculation
+		Uint32 currentTime = SDL_GetTicks();
+		float deltaTime = (currentTime - lastTime) / 1000.0f;  // converts ms to s
+		lastTime = currentTime;
+
+		std::cout << "deltaTime: " << deltaTime << " sec\n";
+
 		// input
 		while (SDL_PollEvent(&event))
 		{
@@ -51,11 +65,21 @@ int main(int argc, char *argv[])
 			}
 		}
 
-		// Delta time
+		// Update demo object (framerate - independent)
+		rectX += speed * deltaTime;
+
+		// Wrap around when off screen
+		if(rectX > 800)
+			rectX = 0;
 
 		// Render
 		SDL_SetRenderDrawColor(renderer, 30, 30, 30, 255);
 		SDL_RenderClear(renderer);
+
+		SDL_FRect rect = {static_cast<float>(rectX), 250, 100, 100};
+		SDL_SetRenderDrawColor(renderer, 255, 100, 100, 255);
+		SDL_RenderFillRect(renderer, &rect);
+
 		SDL_RenderPresent(renderer);
 	}
 
