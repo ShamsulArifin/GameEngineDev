@@ -37,6 +37,11 @@ Compile the source code using your preferred build system or compiler. For examp
 ```bash
 g++ main.cpp -I src/include -L src/lib -lSDL3 -o main.exe
 ```
+or, to run with SDL3_ttf:
+
+```bash
+g++ -I src/include -L src/lib -o main main.cpp -lSDL3 -lSDL3_ttf
+```
 
 ### 4. Run the Application
 
