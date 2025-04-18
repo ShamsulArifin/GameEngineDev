@@ -1,4 +1,4 @@
-prefix=/tmp/tardir/SDL3_ttf-3.2.2/build-mingw/install-i686-w64-mingw32
+prefix=/tmp/tardir/SDL3_ttf-3.2.2/build-mingw/install-x86_64-w64-mingw32
 exec_prefix=${prefix}
 libdir=${prefix}/lib
 includedir=${prefix}/include
