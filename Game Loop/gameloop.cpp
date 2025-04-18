@@ -8,6 +8,8 @@ const int SCREEN_HEIGHT = 600;
 const int TARGET_FPS = 60;
 const int FRAME_DELAY = 1000 / TARGET_FPS;  // in ms
 
+const SDL_Color WHITE = {255, 255, 255, 255};
+
 int main(int argc, char *argv[])
 {
 	// Initialize SDL
@@ -50,7 +52,7 @@ int main(int argc, char *argv[])
 	}
 
 	// load font
-	TTF_Font *font = TTF_OpenFont("lucon.ttf", 24);
+	TTF_Font *font = TTF_OpenFont("lucon.ttf", 12);
 	if (!font)
 	{
 		std::cerr << "Failed to load font" << SDL_GetError() << std::endl;
@@ -102,14 +104,26 @@ int main(int argc, char *argv[])
 		SDL_SetRenderDrawColor(renderer, 30, 30, 30, 255);
 		SDL_RenderClear(renderer);
 
-		// FPS text
+		// stats
 		std::string fpsText = "FPS: " + std::to_string((int)fps);
-		SDL_Color white =  {255, 255, 255, 255};
+		std::string deltaTimeText = "Delta time: " + std::to_string((float)deltaTime);
+		std::string speedText = "Delta time: " + std::to_string((float)speed);
 
-		SDL_Surface *surface = TTF_RenderText_Solid(font, fpsText.c_str(), fpsText.length(), white);
-		SDL_Texture *texture = SDL_CreateTextureFromSurface(renderer, surface);
-		SDL_FRect dstRect = {10.0f, 10.0f, static_cast<float>(surface->w), static_cast<float>(surface->h)};
-		SDL_RenderTexture(renderer, texture, nullptr, &dstRect);
+		SDL_Surface *surface_fps = TTF_RenderText_Solid(font, fpsText.c_str(), fpsText.length(), WHITE);
+		SDL_Surface *surface_deltaTime = TTF_RenderText_Solid(font, deltaTimeText.c_str(), deltaTimeText.length(), WHITE);
+		SDL_Surface *surface_speed = TTF_RenderText_Solid(font, speedText.c_str(), speedText.length(), WHITE);
+
+		SDL_Texture *texture_fps = SDL_CreateTextureFromSurface(renderer, surface_fps);
+		SDL_Texture *texture_deltaTime = SDL_CreateTextureFromSurface(renderer, surface_deltaTime);
+		SDL_Texture *texture_speed = SDL_CreateTextureFromSurface(renderer, surface_speed);
+
+		SDL_FRect dstRect_fps = {10.0f, 10.0f, static_cast<float>(surface_fps->w), static_cast<float>(surface_fps->h)};
+		SDL_FRect dstRect_deltaTime = {10.0f, 30.0f, static_cast<float>(surface_deltaTime->w), static_cast<float>(surface_deltaTime->h)};
+		SDL_FRect dstRect_speed = {10.0f, 50.0f, static_cast<float>(surface_speed->w), static_cast<float>(surface_speed->h)};
+
+		SDL_RenderTexture(renderer, texture_fps, nullptr, &dstRect_fps);
+		SDL_RenderTexture(renderer, texture_deltaTime, nullptr, &dstRect_deltaTime);
+		SDL_RenderTexture(renderer, texture_speed, nullptr, &dstRect_speed);
 
 		SDL_FRect rect = {static_cast<float>(rectX), 250, 100, 100};
 		SDL_SetRenderDrawColor(renderer, 255, 100, 100, 255);
