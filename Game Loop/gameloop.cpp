@@ -3,6 +3,11 @@
 #include <iostream>
 #include <string>
 
+const int SCREEN_WIDTH = 800;
+const int SCREEN_HEIGHT = 600;
+const int TARGET_FPS = 60;
+const int FRAME_DELAY = 1000 / TARGET_FPS;  // in ms
+
 int main(int argc, char *argv[])
 {
 	// Initialize SDL
@@ -21,8 +26,8 @@ int main(int argc, char *argv[])
 	// Create window
 	SDL_Window *window = SDL_CreateWindow(
 			"Game Loop Window",
-			800,
-			600,
+			SCREEN_WIDTH, 
+			SCREEN_HEIGHT,
 			SDL_WINDOW_RESIZABLE);
 
 	if (!window)
@@ -67,6 +72,10 @@ int main(int argc, char *argv[])
 		// deltaTime calculation
 		Uint32 currentTime = SDL_GetTicks();
 		float deltaTime = (currentTime - lastTime) / 1000.0f;  // converts ms to s
+		if(deltaTime < FRAME_DELAY)
+		{
+			SDL_Delay(FRAME_DELAY - deltaTime);
+		}
 		lastTime = currentTime;
 
 		float fps = 1.0f / deltaTime;
