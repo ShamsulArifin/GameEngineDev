@@ -52,6 +52,11 @@ int main(int argc, char *argv[])
 			{
 				isRunning = false;
 			}
+
+			if (event.type == SDL_EVENT_KEY_DOWN || event.type == SDL_EVENT_KEY_UP)
+			{
+				bool down = (event.type == SDL_EVENT_KEY_DOWN);
+			}
 		}
 		// Render
 		SDL_RenderClear(renderer);
