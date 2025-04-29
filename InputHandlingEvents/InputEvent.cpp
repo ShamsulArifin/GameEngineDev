@@ -6,7 +6,7 @@
 const int SCREEN_WIDTH = 800;
 const int SCREEN_HEIGHT = 600;
 const int TARGET_FPS = 60;
-const int FRAME_DELAY = 1000 / TARGET_FPS;  // in ms
+const int FRAME_DELAY = 1000 / TARGET_FPS; // in ms
 
 const SDL_Color WHITE = {255, 255, 255, 255};
 
@@ -27,10 +27,10 @@ int main(int argc, char *argv[])
 
 	// Create window
 	SDL_Window *window = SDL_CreateWindow(
-			"Game Loop Window",
-			SCREEN_WIDTH, 
-			SCREEN_HEIGHT,
-			SDL_WINDOW_RESIZABLE);
+		"Game Loop Window",
+		SCREEN_WIDTH,
+		SCREEN_HEIGHT,
+		SDL_WINDOW_RESIZABLE);
 
 	if (!window)
 	{
@@ -63,18 +63,17 @@ int main(int argc, char *argv[])
 	SDL_Event event;
 
 	// deltaTime
-	Uint32 lastTime = SDL_GetTicks();  // milisecond
+	Uint32 lastTime = SDL_GetTicks(); // milisecond
 
 	// demo object
-	float rectX = 0.0f, speed = 300.0f;  // pixels per second
-
+	float rectX = 0.0f, speed = 300.0f; // pixels per second
 
 	while (isRunning)
 	{
 		// deltaTime calculation
 		Uint32 currentTime = SDL_GetTicks();
-		float deltaTime = (currentTime - lastTime) / 1000.0f;  // converts ms to s
-		if(deltaTime < FRAME_DELAY)
+		float deltaTime = (currentTime - lastTime) / 1000.0f; // converts ms to s
+		if (deltaTime < FRAME_DELAY)
 		{
 			SDL_Delay(FRAME_DELAY - deltaTime);
 		}
@@ -97,7 +96,7 @@ int main(int argc, char *argv[])
 		rectX += speed * deltaTime;
 
 		// Wrap around when off screen
-		if(rectX > 800)
+		if (rectX > 800)
 			rectX = 0;
 
 		// Render
