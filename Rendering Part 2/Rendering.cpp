@@ -4,6 +4,8 @@
 
 const int SCREEN_WIDTH = 800;
 const int SCREEN_HEIGHT = 600;
+const int TARGET_FPS = 60;
+const int FRAME_DELAY = 1000 / TARGET_FPS;  // in ms
 
 int main(int argc, char *argv[])
 {
@@ -47,15 +49,23 @@ int main(int argc, char *argv[])
 	float angle = 0.0f;
 
 	// * Event tick
-	Uint64 now = SDL_GetTicks();
-	Uint64 last = now;
-	double deltaTime = 0;
+	Uint32 lastTime = SDL_GetTicks();  // milisecond
 
 	while (isRunning)
 	{
-		last = now;
-		now = SDL_GetTicks();
-		deltaTime = (now - last) / 1000.0;
+		// deltaTime calculation
+		Uint32 currentTime = SDL_GetTicks();
+		float deltaTime = (currentTime - lastTime) / 1000.0f;  // converts ms to s
+		if(deltaTime < FRAME_DELAY)
+		{
+			SDL_Delay(FRAME_DELAY - deltaTime);
+		}
+		lastTime = currentTime;
+
+		float fps = 1.0f / deltaTime;
+
+		std::cout << "deltaTime: " << deltaTime << " sec\n";
+
 		// input
 		while (SDL_PollEvent(&event))
 		{
@@ -66,6 +76,8 @@ int main(int argc, char *argv[])
 		}
 
 		angle += 90 * deltaTime;  // * rotate 90° per second
+		std::cout << "angle: " << angle << std::endl;
+
 
 		// * Render
 		SDL_SetRenderDrawColor(renderer, 20, 20, 20, 255);
@@ -89,7 +101,7 @@ int main(int argc, char *argv[])
 
 		SDL_RenderPresent(renderer);
 
-		SDL_Delay(16);  // ! ~60 FPS
+		// SDL_Delay(16);  // ! ~60 FPS
 	}
 
 	// * Cleanup
