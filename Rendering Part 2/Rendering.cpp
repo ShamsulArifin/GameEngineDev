@@ -15,7 +15,7 @@ int main(int argc, char *argv[])
 
 	// Create window
 	SDL_Window *window = SDL_CreateWindow(
-			"Game Loop Window",
+			"Rendering Part 2",                 // change title
 			SCREEN_WIDTH,
 			SCREEN_HEIGHT,
 			SDL_WINDOW_RESIZABLE);
