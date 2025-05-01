@@ -5,7 +5,7 @@
 const int SCREEN_WIDTH = 800;
 const int SCREEN_HEIGHT = 600;
 const int TARGET_FPS = 60;
-const int FRAME_DELAY = 1000 / TARGET_FPS;  // in ms
+const int FRAME_DELAY = 1000 / TARGET_FPS; // in ms
 
 int main(int argc, char *argv[])
 {
@@ -49,14 +49,14 @@ int main(int argc, char *argv[])
 	float angle = 0.0f;
 
 	// * Event tick
-	Uint32 lastTime = SDL_GetTicks();  // milisecond
+	Uint32 lastTime = SDL_GetTicks(); // milisecond
 
 	while (isRunning)
 	{
 		// deltaTime calculation
 		Uint32 currentTime = SDL_GetTicks();
-		float deltaTime = (currentTime - lastTime) / 1000.0f;  // converts ms to s
-		if(deltaTime < FRAME_DELAY)
+		float deltaTime = (currentTime - lastTime) / 1000.0f; // converts ms to s
+		if (deltaTime < FRAME_DELAY)
 		{
 			SDL_Delay(FRAME_DELAY - deltaTime);
 		}
@@ -75,16 +75,15 @@ int main(int argc, char *argv[])
 			}
 		}
 
-		angle += 90 * deltaTime;  // * rotate 90° per second
+		angle += 90 * deltaTime; // * rotate 90° per second
 		std::cout << "angle: " << angle << std::endl;
-
 
 		// * Render
 		SDL_SetRenderDrawColor(renderer, 20, 20, 20, 255);
 		SDL_RenderClear(renderer);
 
 		// * Draw filled rect (player)
-		SDL_FRect playerRect = { 100, 100, 100, 100 };
+		SDL_FRect playerRect = {100, 100, 100, 100};
 		SDL_SetRenderDrawColor(renderer, 0, 200, 100, 255);
 		SDL_RenderFillRect(renderer, &playerRect);
 
@@ -93,11 +92,11 @@ int main(int argc, char *argv[])
 		SDL_RenderLine(renderer, 150, 150, 400, 400);
 
 		// * Rotating rectangle
-		SDL_FRect rotatingRect = { 400, 250, 80, 80 };
+		SDL_FRect rotatingRect = {400, 250, 80, 80};
 		SDL_SetRenderDrawColor(renderer, 0, 120, 255, 200);
-		SDL_RenderGeometry(renderer, nullptr, nullptr, 0, nullptr, 0);  // * placeholder
+		SDL_RenderGeometry(renderer, nullptr, nullptr, 0, nullptr, 0); // * placeholder
 
-		SDL_RenderTextureRotated(renderer, nullptr, nullptr, &rotatingRect, angle, nullptr, SDL_FLIP_NONE);  // ! if using this texture
+		SDL_RenderTextureRotated(renderer, nullptr, nullptr, &rotatingRect, angle, nullptr, SDL_FLIP_NONE); // ! if using this texture
 
 		SDL_RenderPresent(renderer);
 
