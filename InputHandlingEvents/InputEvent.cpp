@@ -42,6 +42,7 @@ int main(int argc, char *argv[])
 	// Main game loop
 	bool isRunning = true;
 	SDL_Event event;
+	bool bgToggle = false;
 
 	while (isRunning)
 	{
@@ -56,9 +57,34 @@ int main(int argc, char *argv[])
 			if (event.type == SDL_EVENT_KEY_DOWN || event.type == SDL_EVENT_KEY_UP)
 			{
 				bool down = (event.type == SDL_EVENT_KEY_DOWN);
+				SDL_Keycode key = event.key.key;
+
+				switch (key)
+				{
+					case SDLK_W: std::cout << (down ? "W Down\n" : "W Up\n");
+					break;
+					case SDLK_A: std::cout << (down ? "A Down\n" : "A Up\n");
+					break;
+					case SDLK_S: std::cout << (down ? "S Down\n" : "S Up\n");
+					break;
+					case SDLK_D: std::cout << (down ? "D Down\n" : "D Up\n");
+					break;
+					case SDLK_SPACE:
+						if (down) bgToggle = !bgToggle;
+						break;
+					default: break;
+				}
+			}
+
+			if (event.type == SDL_EVENT_MOUSE_BUTTON_DOWN)
+			{
+				float x, y;
+				SDL_GetMouseState(&x, &y);
+				std::cout << "Mouse Clicked at: "<< x << ", " << y << std::endl;
 			}
 		}
 		// Render
+		SDL_SetRenderDrawColor(renderer, bgToggle ? 0 : 50, bgToggle ? 0 : 50, bgToggle ? 0 : 50, 255);
 		SDL_RenderClear(renderer);
 		SDL_RenderPresent(renderer);
 	}
